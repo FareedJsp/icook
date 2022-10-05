@@ -33,6 +33,7 @@
           <th>Name</th>
           <th>Role</th>
           <th>Email</th>
+          <th>Status</th>
           <th>Action(s)</th>
         </tr>
         </thead>
@@ -49,9 +50,39 @@
               <td> {{ $row->name}} </td>
               <td> {{ $row->role}} </td>
               <td> {{ $row->email}} </td>
+
+              @if ($row->status == 'pending')
+              <th style="color : grey">pending</th>
+              @elseif($row->status == 'approved')
+              <th style="color : green">approved</th>
+              @elseif($row->status == 'rejected')
+              <th style="color : red">rejected</th>
+              @endif
+
               <td>
+
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                  <div class="btn-group mr-2" role="group" aria-label="First group">
+                    @if ($row->status != 'approved')
+                    <form action="/approval/{{$row->id}}" method="post">
+                    @csrf
+                    <input type="hidden" value="approved" name="status">
+                    <button class="btn btn-success" onclick="return confirm('Are you sure you want to approve this data?')">approve</button>
+                    </form>
+                    @endif
+                    @if($row->status != 'rejected')
+                    <form action="/approval/{{$row->id}}" method="post">
+                    @csrf
+                    <input type="hidden" value="rejected" name="status">
+                    <button class="btn btn-danger" onclick="return confirm('Are you sure you want to approve this data?')">reject</button>
+                    </form>
+                    @endif
+                  </div>
+
                 <a href="/edituser/{{$row->id}}" class="btn btn-outline-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                 <a href="/deleteuser/{{$row->id}}" class="btn btn-outline-danger" onclick="return confirm('Are you sure to delete data')"><i class="fa-solid fa-trash"></i></a>
+                
+                </div>
               </td>
             </tr>
 

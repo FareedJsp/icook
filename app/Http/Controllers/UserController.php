@@ -8,6 +8,11 @@ use Illuminate\Routing\Controller;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -75,6 +80,15 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         return view('user.setting', compact('user'));
+    }
+
+    public function approval(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = $request->status;
+        $user->save();
+
+        return redirect() -> route('user');
     }
 
     /**

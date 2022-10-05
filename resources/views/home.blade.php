@@ -19,5 +19,8 @@
             </div>
         </div>
     </div>
+    <div class="d-grid gap-2 col-3 mx-auto mt-4">
+        <a href="/home0" class="btn btn-outline-primary">Click Here To Dashboard</a>
+    </div>
 </div>
 @endsection

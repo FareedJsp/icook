@@ -24,7 +24,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/home', function () {
+Route::get('/home0', function () {
     return view('/dashboard');
 })->name('dashboard');
 
@@ -59,9 +59,9 @@ Route::post('/updatevideo/{id}',[VideoController::class,'update']);
 Route::get('/deletevideo/{id}',[VideoController::class,'destroy']);
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //User
 
@@ -71,6 +71,7 @@ Route::post('/updateuser/{id}',[UserController::class,'update']);
 Route::get('/setting/{id}',[UserController::class,'setting']);
 Route::post('/updatesetting/{id}',[UserController::class,'updatesetting']);
 Route::get('/deleteuser/{id}',[UserController::class,'destroy']);
+Route::post('/approval/{id}', [UserController::class, 'approval']);
 
 Route::get('change-password',[ChangePasswordController::class,'index']);
 Route::post('change-password',[ChangePasswordController::class,'store'])->name('change.password');
